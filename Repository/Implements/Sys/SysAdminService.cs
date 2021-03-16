@@ -23,52 +23,7 @@ namespace Repository.Implements
             throw new NotImplementedException();
         }
 
-        public Task<ApiResult<string>> AddAsync(SysAdmin parm, bool Async = true)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<ApiResult<string>> AddListAsync(List<SysAdmin> parm, bool Async = true)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<ApiResult<ResultCount>> CountAsync(Expression<Func<SysAdmin, bool>> where, bool Async = true)
-        {
-            throw new NotImplementedException();
-        }
-
         public Task<ApiResult<string>> DeleteAsync(string parm)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<ApiResult<string>> DeleteAsync(string parm, bool Async = true)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<ApiResult<string>> DeleteAsync(Expression<Func<SysAdmin, bool>> where, bool Async = true)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<ApiResult<List<SysAdmin>>> GetListAsync(Expression<Func<SysAdmin, bool>> where, Expression<Func<SysAdmin, object>> order, DbOrderEnum orderEnum, bool Async = true)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<ApiResult<List<SysAdmin>>> GetListAsync(bool Async = true)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<ApiResult<SysAdmin>> GetModelAsync(string parm, bool Async = true)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<ApiResult<SysAdmin>> GetModelAsync(Expression<Func<SysAdmin, bool>> where, bool Async = true)
         {
             throw new NotImplementedException();
         }
@@ -77,21 +32,11 @@ namespace Repository.Implements
         {
             throw new NotImplementedException();
         }
-
-        public Task<ApiResult<Page<SysAdmin>>> GetPagesAsync(PageParm parm, bool Async = true)
+        public Task<ApiResult<string>> ModifyAsync(SysAdmin parm)
         {
             throw new NotImplementedException();
         }
 
-        public Task<ApiResult<Page<SysAdmin>>> GetPagesAsync(PageParm parm, Expression<Func<SysAdmin, bool>> where, Expression<Func<SysAdmin, object>> order, DbOrderEnum orderEnum, bool Async = true)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<ApiResult<ResultAny>> IsExistAsync(Expression<Func<SysAdmin, bool>> where, bool Async = true)
-        {
-            throw new NotImplementedException();
-        }
 
 
         #region 用户登录和授权菜单查询
@@ -135,6 +80,10 @@ namespace Repository.Implements
             return res;
 
         }
+
+     
+
+
 
         /// <summary>
         /// 根据登录账号，返回菜单信息
@@ -198,24 +147,6 @@ namespace Repository.Implements
 
 
 
-        public Task<ApiResult<string>> ModifyAsync(SysAdmin parm)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<ApiResult<string>> UpdateAsync(SysAdmin parm, bool Async = true)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<ApiResult<string>> UpdateAsync(List<SysAdmin> parm, bool Async = true)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<ApiResult<string>> UpdateAsync(Expression<Func<SysAdmin, SysAdmin>> columns, Expression<Func<SysAdmin, bool>> where, bool Async = true)
-        {
-            throw new NotImplementedException();
-        }
+       
     }
 }
