@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\EFDatabase\CMSDbContext.csproj" />
+    <ProjectReference Include="..\Repository\CMSCore.csproj" />
   </ItemGroup>
 
 </Project>
