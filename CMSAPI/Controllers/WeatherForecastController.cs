@@ -23,6 +23,7 @@ namespace CMSAPI.Controllers
         public WeatherForecastController(ILogger<WeatherForecastController> logger, ISysAdminService adminService)
         {
             _logger = logger;
+            ///测试IOC
             _adminService = adminService;
         }
 
