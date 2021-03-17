@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using Repository.DtoModel.Sys;
 using Repository.Interfaces;
 using System;
@@ -21,43 +22,51 @@ namespace CMSAPI.Controllers
     [Produces("application/json")]
     [ApiController]
     [Route("api/Admin")]
-    public class WeatherForecastController : ControllerBase
+    public class AdminController : ControllerBase
     {
         private static readonly string[] Summaries = new[]
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
 
-        private readonly ILogger<WeatherForecastController> _logger;
+        private readonly ILogger<AdminController> _logger;
         private readonly ISysAdminService _adminService;
+        private readonly LoginModel.LoginModel _loginModel;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger, ISysAdminService adminService)
+        public AdminController(ILogger<AdminController> logger, ISysAdminService adminService,LoginModel.LoginModel loginModel)
         {
             _logger = logger;
             ///测试IOC
             _adminService = adminService;
-        }
-
-        [HttpGet]
-        public IEnumerable<WeatherForecast> Get()
-        {
-            var rng = new Random();
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = DateTime.Now.AddDays(index),
-                TemperatureC = rng.Next(-20, 55),
-                Summary = Summaries[rng.Next(Summaries.Length)]
-            })
-            .ToArray();
+            _loginModel = loginModel;
         }
 
         /// <summary>
-        /// 修改
+        /// 获取公钥和缓存key
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost("adminGet")]
+        [AllowAnonymous]
+        public   ActionResult GetRSAKey()
+        {
+            var apiRes = new ApiResult<object>();
+             _loginModel.OnGet();
+            apiRes.data = new
+            {
+                number=_loginModel.Number,
+                publicKey=_loginModel.RsaKey[1]
+            };
+            apiRes.success = true;
+            return  Ok(apiRes);
+        }
+
+        /// <summary>
+        /// 登入验证
         /// </summary>
         /// <returns></returns>
         [HttpPost("login")]
         [AllowAnonymous]
-        public async Task<IActionResult> Login( SysAdminLogin parm)
+        public async Task<IActionResult> Login([FromBody]SysAdminLogin parm)
         {
             var apiRes = new ApiResult<string>() { statusCode = (int)ApiEnum.HttpRequestError };
             var token = "";
@@ -70,7 +79,10 @@ namespace CMSAPI.Controllers
                     apiRes.message = "登录失败，请刷新浏览器再次登录";
                     return Ok(apiRes);
                 }
-             
+                var ras = new RSACrypt(rsaKey[0], rsaKey[1]);
+                parm.password = ras.Decrypt(parm.password);
+
+
             }
             catch (Exception ex)
             {
@@ -78,7 +90,7 @@ namespace CMSAPI.Controllers
                 apiRes.statusCode = (int)ApiEnum.Error;
 
               
-                }
+           }
                 apiRes.statusCode = (int)ApiEnum.Status;
                 apiRes.data = token;
                 return Ok(apiRes);
